@@ -1,97 +1,54 @@
-# 🚀 Enterprise ETL Pipeline: Cargue Automatizado de Proyectos de Leyes
+# 🚀 Portafolio de proyectos de desarollos python
 
-Este es un pipeline robusto de Extracción, Transformación y Carga (ETL) desarrollado en Python, para la ingesta y auditoría automatizada de datos de proyectos de ley.
-Este proyecto está diseñado bajo principios de arquitectura limpia, patrones de diseño de software y manejo avanzado de archivos.
-
----
-
-## ✨ Características Principales & Decisiones de Diseño
-
-*   **Arquitectura Orientada a Objetos (Fábricas):** Implementación del patrón *Factory Method* dinámico para instanciar lectores de datos específicos (`ExcelFactory`, `CsvFactory`) según la extensión del archivo, aislando la lógica de negocio de los formatos de origen.
-*   **Ingesta Automatizada (Smart Loading):** Detección dinámica y autónoma del archivo más reciente en el directorio de entrada mediante marcas de tiempo del sistema de archivos (`mtime`).
-*   **Transaccionalidad en Archivos:** Los archivos procesados se mueven de forma segura mediante operaciones de sistema (`shutil.move`) a un directorio histórico *únicamente* si el pipeline se ejecuta con éxito total (evitando pérdida o duplicación de datos).
-*   **Observabilidad Completa (Logging Dinámico):** Sistema de logs en espejo (Consola y Archivo) acoplado al ciclo de vida del script principal (`sys.argv`). Genera trazas cronológicas detalladas por ejecución con formato `[Script]_[YYYYMMDD_HH24MISS].log` para fácil depuración.
-*   **Estrategia Solid y Modular:** Separación estricta de responsabilidades en capas aisladas: Extracción (`file_manager`), Limpieza (`df_clean`), Transformación (`df_transformacion_01`) y Orquestación (`pipeline`).
-
-*   **Los modulos de lectura, manejo de archivos y manejo de logs son reutilizables, y fueron diseñados para usarlos en otros proyectos de este mismo portafolio
----
-
-## 🛠️ Stack Tecnológico
-
-*   **Lenguaje:** Python 3.12+
-*   **Análisis de Datos:** Pandas
-*   **I/O & Sistema de Archivos:** Pathlib, Shutil
-*   **Monitoreo:** Logging (Standard Library)
+Este es un portafolio que muestra varios proyectos reales. Este repositorio centraliza soluciones de ingeniería de datos diseñadas bajo estándares de la industria, priorizando la **tolerancia a fallos, la escalabilidad, el desacoplamiento de arquitectura y la eficiencia en costos de cómputo (FinOps)**.
+Aquí encontrarás implementaciones que simulan escenarios de producción reales, alejados de proyectos puramente académicos.
 
 ---
 
-## 📂 Estructura del Proyecto
+---
 
-```text
-├── data/
-│   ├── entrada/            # Directorio donde se depositan los nuevos archivos
-│   └── procesados/         # Histórico de archivos procesados exitosamente. Esta carpeta debe ser depurada segun las reglas de negocio para manejo de datos históricos.
-├── utils/
-│   ├── __init__.py             # Metodo constructor del proyecto.
-│   ├── df_clean.py             # Reglas de negocio para limpieza de datos del dataframe.
-│   ├── df_transformacion.py    # Transformación y feature engineering de dataframe.
-│   ├── pipeline.py             # Orquestador central del flujo ETL Puede ser reemplazado por un orquestador, como Apache airflow.
-├── leyes.py                    # Script de entrada de la aplicación (CLI).
-├── leyes_YYYYMMDD_HH24MISS.log # Logs generados dinámicamente. Estos archivos deben ser depurados segun las reglas de negocio para manejo de logs.
-├── .gitignore                  # Lista de objetos que no se quiere subir a github
-└── README.md
+## 🗺️ Mapa de Proyectos en el Repositorio
 
-```
+Para facilitar tu revisión, los proyectos están organizados por su enfoque arquitectónico y madurez técnica:
+
+### 1. ⚡ _01_Proyecto_Utils
+Modulos comunes para
+* **Stack:** Python, Data Ops, File-based Lakehouse.
+* **Core:** Uso de patrones de diseño para lograr una arquitectura desacoplada y eficiente. 
+* **Por qué destaca:** 
+
+### 2. 🕒 _03_Proyecto_Leyes 
+Pipeline de Ingesta y Transformación Desacoplado
+
+* **Stack:** Pipeline Lectura y limpieza de archivos de datos tolerante a fallos.
+* **Core:** Altamente desacoplado para facilitar el manteniniento
+* **Por qué destaca:** Implementa almacenamiento inmutable particionado (estilo Data Lake) e idempotencia nativa para permitir reprocesamientos automáticos sin duplicar datos si una carga horaria falla.
 
 ---
 
-## ⚙️ Configuración y Ejecución
+## 🛠️ Stack Tecnológico Principal
 
-### 1. Requisitos Previos
-Clona el repositorio e instala las dependencias necesarias:
-```bash
-git clone https://github.com
-cd tu-repositorio
-pip install pandas openpyxl
-```
+Esta es la caja de herramientas con la que resuelvo problemas de negocio y construyo arquitecturas de datos robustas:
 
-### 2. Ejecutar el Pipeline
-Para inicializar el orquestador y procesar el lote de datos más reciente, ejecuta el script principal:
-```bash
-python leyes.py
-python3 leyes.py
-```
+* **Lenguajes:** Python (OOP, PEP 8, Gestión de Logs), SQL (Consultas Avanzadas, Optimización).
+* **Orquestación y Procesamiento (Conceptos aplicados):** Simulación de Cron/Airflow scheduling, Batch Processing, Idempotencia.
+* **Buenas Prácticas:** Estructura de proyectos modular (Data Ops), Almacenamiento Inmutable Particionado, Control de Versiones (Git).
 
 ---
 
-## 📊 Ciclo de Vida del Flujo de Datos
+## 🧬 Filosofía de Ingeniería
 
-```mermaid
-graph TD
-    A[data/entrada/] -->|1. Detecta archivo más reciente| B(load_most_recent_file)
-    B -->|2. Resuelve Fábrica| C{EXTENSION_MAP}
-    C -->|.xlsx| D[ExcelFactory]
-    C -->|.csv| E[CsvFactory]
-    D & E -->|3. Carga exitosa| F[df_clean & df_transformacion]
-    F -->|4. Finalización exitosa| G[Mueve archivo a data/procesados/]
-    F -->|X. Fallo en Pipeline| H[Conserva archivo en entrada + Log de Excepción]
-```
+Cada línea de código en este portafolio está escrita pensando en tres pilares:
+1. **Idempotencia:** Si un pipeline se ejecuta N veces con los mismos datos de entrada, el resultado final debe ser exactamente el mismo. Cero duplicados.
+2. **Desacoplamiento:** Separar la computación pesada o la ingesta inestable para aislar errores y reducir costos de infraestructura.
+3. **Legibilidad:** Código modular, estructurado con tipos (`typing`), logs claros y manejo estricto de excepciones.
 
 ---
 
-## 📝 Ejemplo de Observabilidad (Logs en Tiempo Real)
+## 📬 Contacto y Conectemos
 
-Cada ejecución genera automáticamente un diagnóstico limpio y detallado. Ejemplo de salida en consola y archivo `.log`:
+Si estás buscando un Ingeniero de Datos con mentalidad de negocio y bases sólidas en arquitectura:
 
-```text
-2026-09-19 20:20:25,078 [INFO] (file_manager.py:35) - Archivo más reciente detectado automáticamente: 'proyectos_ley_20260918_171249.xlsx'
-2026-09-19 20:20:25,120 [INFO] (pipeline.py:27) - --- Fase 1/3: Extracción de datos ---
-2026-09-19 20:20:25,845 [INFO] (pipeline.py:29) - Fase 1 Completada. Dimensiones iniciales: (1524, 18)
-2026-09-19 20:20:25,850 [INFO] (pipeline.py:32) - --- Fase 2/3: Limpieza de datos ---
-2026-09-19 20:20:26,102 [INFO] (file_manager.py:54) - Archivo movido exitosamente a: 'data/procesados/proyectos_ley_20260918_171249.xlsx'
-2026-09-19 20:20:26,105 [INFO] (pipeline.py:42) - === [FIN SUCCESSFUL] El Pipeline ha terminado con éxito ===
-```
-
----
-💡 **Nota para Reclutadores:** Este proyecto fue construido simulando un ambiente de producción, priorizando la resiliencia al fallo (error handling robusto), el código autodocumentado mediante *type hinting* y la escalabilidad de la arquitectura.
-
+* **LinkedIn:** [Tu Nombre y Apellido](Enlace a tu perfil)
+* **Email:** tu.correo@email.com
+* **Portfolio Web:** [Enlace si tienes]
