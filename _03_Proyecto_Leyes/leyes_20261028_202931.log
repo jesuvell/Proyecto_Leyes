@@ -1,0 +1,25 @@
+2026-10-28 20:29:31,270 [INFO] (pipeline.py:30) - === [INICIO] Ejecución del Pipeline ETL ===
+2026-10-28 20:29:31,270 [INFO] (pipeline.py:34) - --- Fase 1/4: Extracción de datos ---
+2026-10-28 20:29:31,270 [INFO] (file_manager.py:19) - Escaneando directorio para buscar el archivo más reciente: /home/jesus/jesus/Python/03_Proyecto_Leyes/datos
+2026-10-28 20:29:31,270 [INFO] (file_manager.py:35) - Archivo más reciente detectado automáticamente: 'proyectos_ley_20260926_232108.xlsx'
+2026-10-28 20:29:31,270 [INFO] (readers.py:20) - Leyendo archivo Excel en: /home/jesus/jesus/Python/03_Proyecto_Leyes/datos/proyectos_ley_20260926_232108.xlsx
+2026-10-28 20:29:32,608 [INFO] (file_manager.py:56) - Archivo movido exitosamente a: '/home/jesus/jesus/Python/03_Proyecto_Leyes/datos/procesados/proyectos_ley_20260926_232108.xlsx'
+2026-10-28 20:29:32,608 [INFO] (pipeline.py:37) - Fase 1 Completada. Dimensiones iniciales: (6655, 16)
+2026-10-28 20:29:32,608 [INFO] (pipeline.py:40) - --- Fase 2/4: Limpieza de datos ---
+2026-10-28 20:29:32,608 [INFO] (df_clean.py:13) - Iniciando limpieza de datos. Registros iniciales: 6655
+2026-10-28 20:29:33,207 [INFO] (df_clean.py:62) - Limpieza finalizada exitosamente.
+2026-10-28 20:29:33,207 [INFO] (df_clean.py:63) - Registros finales: 6653 | Registros eliminados/filtrados: 2
+2026-10-28 20:29:33,208 [INFO] (pipeline.py:42) - Fase 2 Completada. Dimensiones post-limpieza: (6653, 15)
+2026-10-28 20:29:33,208 [INFO] (pipeline.py:45) - --- Fase 3/4: Transformación de variables ---
+2026-10-28 20:29:33,208 [INFO] (df_transformacion_01.py:11) - Iniciando la transformación de variables (Fase 01)...
+2026-10-28 20:29:33,232 [INFO] (df_transformacion_01.py:67) - Transformación Fase 01 completada exitosamente.
+2026-10-28 20:29:33,232 [INFO] (df_transformacion_01.py:68) - Métricas calculadas para 6653 registros:
+2026-10-28 20:29:33,232 [INFO] (df_transformacion_01.py:69) -   - Proyectos con autores identificados: 6653
+2026-10-28 20:29:33,232 [INFO] (df_transformacion_01.py:70) -   - Promedio de autores por proyecto: 7.36
+2026-10-28 20:29:33,232 [INFO] (df_transformacion_01.py:71) -   - Resumen de estados homologados (Estado_Ley_2): {'archivado': 3420, 'tramite': 1372, 'ley': 930, 'retirado': 546, 'otros': 385}
+2026-10-28 20:29:33,233 [INFO] (pipeline.py:47) - Fase 3 Completada. Columnas finales: ['no', 'no_camara', 'No_Senado', 'Fecha_Camara', 'Fecha_Senado', 'Proyecto', 'Titulo', 'Objeto_del_proyecto', 'Observaciones', 'Tipo_de_Ley', 'Autores', 'Estado_de_Ley', 'Origen_de_Ley', 'Comision', 'Legislatura', 'ind_tiene_Autores', 'no_autores', 'Estado_Ley_2', 'Ind_Observaciones', 'Ind_No_Senado', 'Ind_Fecha_Senado', 'Ind_Senado']
+2026-10-28 20:29:33,233 [INFO] (pipeline.py:51) - --- Fase 4/4: Exportación de datos a Parquet ---
+2026-10-28 20:29:33,233 [INFO] (dataframe_to_file.py:84) - Iniciando exportación. Nombre: proyectos_procesados, Tipo: P, Ubicación: M
+2026-10-28 20:29:33,291 [INFO] (dataframe_to_file.py:111) - Archivo exportado exitosamente en: /home/jesus/jesus/Python/03_Proyecto_Leyes/modelos/proyectos_procesados.parquet
+2026-10-28 20:29:33,291 [INFO] (pipeline.py:58) - Fase 4 Completada. Archivo exportado exitosamente.
+2026-10-28 20:29:33,291 [INFO] (pipeline.py:60) - === [FIN SUCCESSFUL] El Pipeline ha terminado con éxito ===
