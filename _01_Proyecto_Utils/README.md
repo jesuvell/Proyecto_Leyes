@@ -1,4 +1,4 @@
-# 🚀 Enterprise ETL Pipeline: utilidades de soporte del portafolio
+# 🚀 Modulos de apoyo del portafolio
 
 Esta es una libreria de modulos python comun a todos los proyectos del portafolio.
 Contiene modulos para la ingesta, escritura y auditoría automatizada.
